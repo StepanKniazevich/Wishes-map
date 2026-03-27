@@ -6,169 +6,258 @@
 <title>Карта Бажань ✨ МС Петя</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold:#c9a84c; --gold-light:#f0d080; --cream:#f5efe0;
-  --deep:#060610; --deep2:#0e0e20;
-  --rope:#8B6914;
+:root{
+  --gold:#c9a84c;--gold-light:#f0d080;--cream:#f5efe0;
+  --deep:#04040e;--rope:#8B6914;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--deep);font-family:'Cormorant Garamond',serif;overflow-x:hidden;cursor:default;}
+body{background:var(--deep);font-family:'Cormorant Garamond',serif;overflow-x:hidden;}
 
-/* ═══════════ PARTICLES ═══════════ */
+/* ─── STARFIELD BG ─── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 20% 20%,rgba(201,168,76,.04) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 80%,rgba(0,91,187,.05) 0%,transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+/* ─── PARTICLES ─── */
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.pt{position:absolute;border-radius:50%;background:var(--gold);animation:ptFloat linear infinite;}
-@keyframes ptFloat{0%{transform:translateY(105vh) scale(0) rotate(0deg);opacity:0}10%{opacity:.7}90%{opacity:.2}100%{transform:translateY(-5vh) scale(1.5) rotate(360deg);opacity:0}}
+.pt{position:absolute;border-radius:50%;animation:ptFloat linear infinite;}
+@keyframes ptFloat{0%{transform:translateY(105vh) scale(0) rotate(0);opacity:0}8%{opacity:.8}92%{opacity:.2}100%{transform:translateY(-5vh) scale(2) rotate(360deg);opacity:0}}
 
-/* ═══════════ HEADER ═══════════ */
-.header{position:relative;z-index:10;text-align:center;padding:70px 20px 50px;
-  background:linear-gradient(180deg,#02020c 0%,transparent 100%);}
+/* ─── HEADER ─── */
+.header{position:relative;z-index:10;text-align:center;padding:80px 20px 55px;
+  background:linear-gradient(180deg,#02020a 0%,transparent 100%);}
 .hbadge{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:8px;color:var(--gold);
-  text-transform:uppercase;opacity:0;animation:fadeUp .9s .2s forwards;}
-.htitle{font-family:'Playfair Display',serif;font-size:clamp(52px,9vw,110px);font-weight:900;
+  text-transform:uppercase;opacity:0;animation:fu .9s .2s forwards;}
+.htitle{font-family:'Playfair Display',serif;font-size:clamp(54px,9vw,115px);font-weight:900;
   color:var(--cream);line-height:1;margin:14px 0 10px;
-  text-shadow:0 0 100px rgba(201,168,76,.5);opacity:0;animation:fadeUp .9s .5s forwards;}
+  text-shadow:0 0 120px rgba(201,168,76,.45);opacity:0;animation:fu .9s .5s forwards;}
 .htitle span{color:var(--gold);}
-.hsub{font-size:18px;font-style:italic;color:rgba(245,239,224,.55);opacity:0;animation:fadeUp .9s .8s forwards;}
-.hdivider{width:180px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  margin:22px auto 0;opacity:0;animation:fadeUp .9s 1s forwards;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.hsub{font-size:18px;font-style:italic;color:rgba(245,239,224,.5);opacity:0;animation:fu .9s .8s forwards;}
+.hdiv{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:22px auto 0;opacity:0;animation:fu .9s 1s forwards;}
+@keyframes fu{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
-/* ═══════════ WRAPPER & ROPE SVG ═══════════ */
-#board-wrap{position:relative;z-index:5;max-width:1500px;margin:0 auto;padding:10px 24px 60px;}
-#rope-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+/* ─── SECTION LABELS ─── */
+.sec-label{
+  grid-column:1/13;
+  font-family:'Unbounded',sans-serif;font-size:10px;font-weight:400;
+  letter-spacing:8px;color:rgba(201,168,76,.5);text-transform:uppercase;
+  text-align:center;padding:18px 0 4px;
+  display:flex;align-items:center;gap:16px;justify-content:center;
+}
+.sec-label::before,.sec-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent);
+}
 
-/* ═══════════ GRID ═══════════ */
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;position:relative;z-index:3;}
+/* ─── BOARD WRAP ─── */
+#board-wrap{position:relative;z-index:5;max-width:1520px;margin:0 auto;padding:10px 22px 80px;}
+#rope-svg{position:absolute;inset:0;width:100%;pointer-events:none;z-index:2;overflow:visible;}
 
-/* ═══════════ CARD BASE ═══════════ */
+/* ─── GRID ─── */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:13px;position:relative;z-index:3;}
+
+/* ─── CARD ─── */
 .card{border-radius:18px;overflow:hidden;position:relative;cursor:pointer;
-  box-shadow:0 10px 40px rgba(0,0,0,.6);
-  opacity:0;transform:perspective(800px) rotateX(20deg) translateY(40px);
-  transition:box-shadow .4s,transform .4s cubic-bezier(.23,1,.32,1);}
-.card.visible{opacity:1;transform:perspective(800px) rotateX(0deg) translateY(0);}
-.card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 60%);pointer-events:none;z-index:5;}
-.card:hover{transform:translateY(-10px) scale(1.03) !important;
-  box-shadow:0 25px 70px rgba(201,168,76,.3),0 0 0 1.5px rgba(201,168,76,.4);z-index:20;}
+  box-shadow:0 12px 45px rgba(0,0,0,.65);
+  opacity:0;transform:perspective(900px) rotateY(15deg) translateY(35px) scale(.97);
+  transition:box-shadow .45s,transform .5s cubic-bezier(.23,1,.32,1),opacity .5s;}
+.card.vis{opacity:1;transform:perspective(900px) rotateY(0deg) translateY(0) scale(1);}
+.card::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 55%);
+  pointer-events:none;z-index:5;}
+.card:hover{
+  transform:translateY(-10px) scale(1.035) perspective(900px) rotateY(0) !important;
+  box-shadow:0 28px 75px rgba(201,168,76,.28),0 0 0 1.5px rgba(201,168,76,.4);
+  z-index:25;}
 .card img{width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform .6s cubic-bezier(.23,1,.32,1);}
-.card:hover img{transform:scale(1.08);}
+  transition:transform .65s cubic-bezier(.23,1,.32,1);}
+.card:hover img{transform:scale(1.09);}
 
-/* overlay gradient */
-.ov{position:absolute;bottom:0;left:0;right:0;padding:70px 18px 18px;
-  background:linear-gradient(transparent,rgba(4,4,16,.92));z-index:4;border-radius:0 0 18px 18px;}
+/* overlay */
+.ov{position:absolute;bottom:0;left:0;right:0;padding:75px 18px 18px;
+  background:linear-gradient(transparent,rgba(3,3,14,.93));z-index:4;}
 .tag{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:4px;color:var(--gold);
   text-transform:uppercase;margin-bottom:5px;display:block;}
-.qt{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--cream);
-  line-height:1.5;margin-bottom:4px;}
-.au{font-size:11px;color:rgba(201,168,76,.8);font-family:'Unbounded',sans-serif;font-weight:300;letter-spacing:1px;}
-.badge{position:absolute;top:14px;right:14px;background:var(--gold);color:#1a0a00;
+.qt{font-family:'Playfair Display',serif;font-size:13.5px;font-style:italic;
+  color:var(--cream);line-height:1.5;margin-bottom:4px;}
+.au{font-size:11px;color:rgba(201,168,76,.8);font-family:'Unbounded',sans-serif;
+  font-weight:300;letter-spacing:1px;}
+
+/* badge */
+.badge{position:absolute;top:13px;right:13px;background:var(--gold);color:#160800;
   font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;padding:5px 12px;
   border-radius:100px;letter-spacing:1px;text-transform:uppercase;z-index:6;
-  animation:badgePulse 2.5s ease-in-out infinite;}
-@keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.5)}50%{box-shadow:0 0 0 10px rgba(201,168,76,0)}}
+  animation:bp 2.5s ease-in-out infinite;}
+@keyframes bp{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.5)}50%{box-shadow:0 0 0 10px rgba(201,168,76,0)}}
 
-/* ═══════════ PIN / CLIP on each card ═══════════ */
-.pin{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:16px;height:16px;
-  background:radial-gradient(circle at 40% 35%,#c8c8c8,#888);border-radius:50%;
-  box-shadow:0 3px 8px rgba(0,0,0,.6);z-index:10;}
-.pin::after{content:'';position:absolute;top:50%;left:50%;width:6px;height:6px;
-  background:radial-gradient(circle at 35% 35%,#fff,#555);border-radius:50%;
-  transform:translate(-50%,-50%);}
+/* pin */
+.pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:15px;height:15px;
+  background:radial-gradient(circle at 38% 32%,#d8d8d8,#777);
+  border-radius:50%;box-shadow:0 3px 8px rgba(0,0,0,.7);z-index:10;}
+.pin::after{content:'';position:absolute;top:50%;left:50%;width:5px;height:5px;
+  background:radial-gradient(circle at 35% 35%,#fff,#444);
+  border-radius:50%;transform:translate(-50%,-50%);}
 
-/* ═══════════ CARD SIZES ═══════════ */
-.c1{grid-column:1/5;min-height:360px;transition-delay:.05s;}
-.c2{grid-column:5/8;min-height:360px;transition-delay:.1s;}
-.c3{grid-column:8/13;min-height:360px;transition-delay:.15s;}
-.c4{grid-column:1/4;min-height:300px;transition-delay:.2s;}
-.c5{grid-column:4/8;min-height:300px;transition-delay:.25s;}
-.c6{grid-column:8/13;min-height:300px;transition-delay:.3s;}
-.c7{grid-column:1/5;min-height:330px;transition-delay:.35s;}
-.c8{grid-column:5/9;min-height:330px;transition-delay:.4s;}
-.c9{grid-column:9/13;min-height:330px;transition-delay:.45s;}
+/* ─── CARD SIZES ─── */
+/* Row 1 */
+.r1c1{grid-column:1/5;min-height:360px;}
+.r1c2{grid-column:5/8;min-height:360px;}
+.r1c3{grid-column:8/13;min-height:360px;}
+/* Row 2 */
+.r2c1{grid-column:1/4;min-height:300px;}
+.r2c2{grid-column:4/7;min-height:300px;}
+.r2c3{grid-column:7/10;min-height:300px;}
+.r2c4{grid-column:10/13;min-height:300px;}
+/* Row 3 – family focus */
+.r3c1{grid-column:1/6;min-height:340px;}
+.r3c2{grid-column:6/9;min-height:340px;}
+.r3c3{grid-column:9/13;min-height:340px;}
+/* Row 4 – health / sport */
+.r4c1{grid-column:1/4;min-height:310px;}
+.r4c2{grid-column:4/8;min-height:310px;}
+.r4c3{grid-column:8/11;min-height:310px;}
+.r4c4{grid-column:11/13;min-height:310px;}
+/* Row 5 – english / victory */
+.r5c1{grid-column:1/5;min-height:330px;}
+.r5c2{grid-column:5/9;min-height:330px;}
+.r5c3{grid-column:9/13;min-height:330px;}
 
-/* ═══════════ HERO MC PETYA ═══════════ */
-.petya-section{grid-column:1/13;position:relative;border-radius:24px;overflow:hidden;
-  min-height:520px;margin-top:4px;
-  opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s;
-  box-shadow:0 20px 80px rgba(0,0,0,.8);}
-.petya-section.visible{opacity:1;transform:translateY(0);}
-.petya-bg{position:absolute;inset:0;z-index:0;}
-.petya-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(1.3);}
-.petya-gradient{position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(6,6,16,.9) 0%,rgba(201,168,76,.08) 50%,rgba(6,6,16,.85) 100%);}
-.petya-content{position:relative;z-index:5;display:flex;align-items:center;gap:50px;
-  padding:60px 60px;height:100%;}
-.petya-photo-wrap{flex-shrink:0;position:relative;}
-.petya-photo-wrap img{width:260px;height:320px;object-fit:cover;object-position:top;
+/* ─── QUOTE CARD ─── */
+.qcard{
+  border-radius:18px;padding:36px 32px;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(30px);transition:opacity .5s,transform .5s;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.qcard.vis{opacity:1;transform:translateY(0);}
+.qcard::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.09) 0%,transparent 70%);
+  pointer-events:none;}
+.qcard:hover{transform:translateY(-6px) !important;
+  box-shadow:0 20px 55px rgba(201,168,76,.22),0 0 0 1.5px rgba(201,168,76,.35);z-index:25;}
+.qcard .big-q{font-family:'Playfair Display',serif;font-size:80px;line-height:.8;
+  color:rgba(201,168,76,.18);position:absolute;top:20px;left:18px;font-style:italic;}
+.qcard .qtext{font-family:'Playfair Display',serif;font-size:clamp(15px,1.5vw,20px);
+  font-style:italic;color:var(--cream);line-height:1.6;margin-bottom:14px;position:relative;z-index:1;}
+.qcard .qauthor{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:3px;
+  color:var(--gold);text-transform:uppercase;position:relative;z-index:1;}
+
+/* ─── MC PETYA HERO ─── */
+.petya-wrap{
+  grid-column:1/13;min-height:520px;border-radius:24px;overflow:hidden;
+  position:relative;opacity:0;transform:translateY(40px);
+  transition:opacity .8s .1s,transform .8s .1s;
+  box-shadow:0 25px 90px rgba(0,0,0,.85);
+}
+.petya-wrap.vis{opacity:1;transform:translateY(0);}
+.petya-bg{position:absolute;inset:0;}
+.petya-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.38) saturate(1.4);}
+.petya-grad{position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(4,4,14,.92) 0%,rgba(201,168,76,.06) 50%,rgba(4,4,14,.88) 100%);}
+.petya-inner{position:relative;z-index:5;display:flex;align-items:center;
+  gap:55px;padding:60px 65px;min-height:520px;}
+.photo-frame{flex-shrink:0;position:relative;}
+.photo-frame img{width:255px;height:315px;object-fit:cover;object-position:top center;
   border-radius:20px;border:3px solid var(--gold);
-  box-shadow:0 0 60px rgba(201,168,76,.4),0 20px 40px rgba(0,0,0,.5);}
-.petya-glow{position:absolute;inset:-15px;border-radius:28px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.25) 0%,transparent 70%);
-  animation:petyaPulse 2s ease-in-out infinite;}
-@keyframes petyaPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.7}}
-.petya-text{flex:1;}
-.petya-name{font-family:'Unbounded',sans-serif;font-size:13px;letter-spacing:6px;
-  color:var(--gold);margin-bottom:16px;opacity:.8;}
-.petya-title{font-family:'Unbounded',sans-serif;font-size:clamp(24px,4vw,52px);
-  font-weight:900;color:var(--cream);line-height:1.1;margin-bottom:10px;
-  text-transform:uppercase;letter-spacing:2px;}
-.petya-title .gold{color:var(--gold);}
-.petya-title .glow-text{
-  -webkit-text-stroke:1px var(--gold-light);color:transparent;
-  text-shadow:0 0 30px var(--gold),0 0 60px rgba(201,168,76,.5);}
-.petya-subtitle{font-family:'Unbounded',sans-serif;font-size:clamp(16px,2.5vw,28px);
-  font-weight:700;color:var(--gold-light);margin-bottom:24px;
-  text-transform:uppercase;letter-spacing:3px;
-  animation:textShimmer 3s ease-in-out infinite;}
-@keyframes textShimmer{0%,100%{text-shadow:0 0 10px rgba(240,208,128,.3)}50%{text-shadow:0 0 30px rgba(240,208,128,.8),0 0 60px rgba(201,168,76,.5)}}
-.petya-quote{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;
-  color:rgba(245,239,224,.75);line-height:1.6;border-left:3px solid var(--gold);
-  padding-left:20px;margin-top:12px;}
-.ukraine-badge{display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-  background:linear-gradient(135deg,#005bbb,#003a7a);border:1px solid #005bbb;
-  border-radius:100px;padding:8px 20px;
-  font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:3px;color:#ffd500;}
+  box-shadow:0 0 70px rgba(201,168,76,.45),0 25px 50px rgba(0,0,0,.6);}
+.photo-glow{position:absolute;inset:-18px;border-radius:30px;
+  background:radial-gradient(ellipse,rgba(201,168,76,.22) 0%,transparent 70%);
+  animation:glow 2.2s ease-in-out infinite;}
+@keyframes glow{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.6}}
+.nameplate{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#160800;font-family:'Unbounded',sans-serif;
+  font-size:11px;font-weight:700;padding:6px 22px;border-radius:100px;
+  white-space:nowrap;letter-spacing:2px;box-shadow:0 4px 22px rgba(201,168,76,.55);}
 
-/* ═══════════ MANIFESTO ROW ═══════════ */
-.manifesto{grid-column:1/13;background:linear-gradient(135deg,#0c0c20 0%,#181830 50%,#0c0c20 100%);
-  border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:50px 40px;text-align:center;
+/* big text */
+.hero-label{font-family:'Unbounded',sans-serif;font-size:11px;letter-spacing:6px;
+  color:var(--gold);opacity:.75;margin-bottom:18px;}
+.hero-main{font-family:'Unbounded',sans-serif;font-size:clamp(22px,3.8vw,54px);
+  font-weight:900;text-transform:uppercase;line-height:1.1;margin-bottom:10px;}
+.glowline{color:transparent;-webkit-text-stroke:1.5px var(--gold-light);
+  text-shadow:0 0 35px var(--gold),0 0 70px rgba(201,168,76,.4);}
+.goldline{color:var(--gold);}
+.whiteline{color:var(--cream);}
+.hero-sub{font-family:'Unbounded',sans-serif;font-size:clamp(13px,2vw,26px);
+  font-weight:700;color:var(--gold-light);text-transform:uppercase;letter-spacing:3px;
+  animation:shine 3s ease-in-out infinite;margin-bottom:22px;}
+@keyframes shine{0%,100%{text-shadow:none}50%{text-shadow:0 0 30px rgba(240,208,128,.8)}}
+.hero-quote{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;
+  color:rgba(245,239,224,.75);line-height:1.65;border-left:3px solid var(--gold);
+  padding-left:20px;}
+.ua-chip{display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+  background:linear-gradient(135deg,#005bbb,#003a7a);border:1px solid rgba(0,91,187,.6);
+  border-radius:100px;padding:8px 22px;
+  font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:3px;color:#ffd500;}
+.chips-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+.chip{font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);
+  border:1px solid rgba(201,168,76,.3);border-radius:100px;padding:6px 16px;
+  background:rgba(201,168,76,.06);text-transform:uppercase;
+  animation:shine 2.5s ease-in-out infinite;}
+
+/* watermark text */
+.petya-watermark{position:absolute;bottom:16px;left:0;right:0;text-align:center;z-index:2;
+  font-family:'Unbounded',sans-serif;font-size:clamp(22px,4.5vw,68px);font-weight:900;
+  color:rgba(201,168,76,.055);letter-spacing:6px;text-transform:uppercase;pointer-events:none;}
+
+/* ─── MANIFESTO ─── */
+.manifesto{
+  grid-column:1/13;border-radius:22px;padding:55px 44px;text-align:center;
   position:relative;overflow:hidden;
-  opacity:0;transform:translateY(40px);transition:opacity .8s .5s,transform .8s .5s;}
-.manifesto.visible{opacity:1;transform:translateY(0);}
+  background:linear-gradient(135deg,#0a0a1e 0%,#161628 50%,#0a0a1e 100%);
+  border:1px solid rgba(201,168,76,.22);
+  opacity:0;transform:translateY(35px);transition:opacity .8s .4s,transform .8s .4s;
+}
+.manifesto.vis{opacity:1;transform:translateY(0);}
 .manifesto::before{content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.07) 0%,transparent 70%);pointer-events:none;}
-.man-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,58px);
+.man-title{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,60px);
   font-weight:900;color:var(--gold);margin-bottom:14px;}
-.man-text{font-size:20px;font-style:italic;color:rgba(245,239,224,.75);
-  line-height:1.7;max-width:800px;margin:0 auto;}
-.tags-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:28px;}
-.tag-pill{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:2px;
-  color:var(--gold);border:1px solid rgba(201,168,76,.3);border-radius:100px;
-  padding:7px 18px;background:rgba(201,168,76,.06);}
+.man-text{font-size:20px;font-style:italic;color:rgba(245,239,224,.72);
+  line-height:1.7;max-width:820px;margin:0 auto;}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px;}
+.pill{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:2px;
+  color:var(--gold);border:1px solid rgba(201,168,76,.28);border-radius:100px;
+  padding:7px 18px;background:rgba(201,168,76,.05);}
 
-/* ═══════════ FOOTER ═══════════ */
-.footer{position:relative;z-index:5;text-align:center;padding:40px;
-  color:rgba(201,168,76,.4);font-family:'Unbounded',sans-serif;font-size:10px;
-  letter-spacing:4px;border-top:1px solid rgba(201,168,76,.1);}
+/* ─── ROPE ─── */
+.rp{fill:none;stroke:url(#rg);stroke-linecap:round;}
+.kn{filter:drop-shadow(0 2px 5px rgba(0,0,0,.7));}
 
-/* ═══════════ ROPE STYLE ═══════════ */
-.rope-path{fill:none;stroke:url(#ropeGrad);stroke-width:3.5;stroke-linecap:round;
-  filter:drop-shadow(0 2px 6px rgba(139,105,20,.6));}
-.rope-knot{fill:var(--rope);filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));}
+/* ─── TICKER ─── */
+#ticker{position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:rgba(4,4,14,.96);border-top:1px solid rgba(201,168,76,.2);
+  padding:11px 0;text-align:center;overflow:hidden;}
+#ticker-t{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:6px;color:var(--gold);text-transform:uppercase;
+  display:inline-block;transition:opacity .5s;}
 
-/* ═══════════ SCROLL INDICATOR ═══════════ */
-.scroll-hint{position:fixed;bottom:30px;right:30px;z-index:100;
+/* ─── SCROLL HINT ─── */
+.scroll-hint{position:fixed;bottom:55px;right:28px;z-index:99;
   font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:3px;
-  color:rgba(201,168,76,.5);writing-mode:vertical-rl;
-  animation:scrollBounce 2s ease-in-out infinite;}
-@keyframes scrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+  color:rgba(201,168,76,.45);writing-mode:vertical-rl;
+  animation:sb 2s ease-in-out infinite;}
+@keyframes sb{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ─── FOOTER ─── */
+.footer{z-index:5;text-align:center;padding:44px;
+  color:rgba(201,168,76,.35);font-family:'Unbounded',sans-serif;
+  font-size:10px;letter-spacing:4px;
+  border-top:1px solid rgba(201,168,76,.09);}
 
 @media(max-width:900px){
-  .c1,.c2,.c3,.c4,.c5,.c6,.c7,.c8,.c9{grid-column:1/13;min-height:280px;}
-  .petya-content{flex-direction:column;padding:40px 30px;}
-  .petya-photo-wrap img{width:200px;height:240px;}
+  .r1c1,.r1c2,.r1c3,.r2c1,.r2c2,.r2c3,.r2c4,
+  .r3c1,.r3c2,.r3c3,.r4c1,.r4c2,.r4c3,.r4c4,
+  .r5c1,.r5c2,.r5c3{grid-column:1/13;min-height:260px;}
+  .petya-inner{flex-direction:column;padding:40px 28px;}
+  .photo-frame img{width:195px;height:240px;}
   #rope-svg{display:none;}
+  .scroll-hint{display:none;}
 }
 </style>
 </head>
@@ -177,408 +266,656 @@ body{background:var(--deep);font-family:'Cormorant Garamond',serif;overflow-x:hi
 <div id="particles"></div>
 <div class="scroll-hint">SCROLL ↓</div>
 
-<!-- ═══ HEADER ═══ -->
+<!-- ══════════ HEADER ══════════ -->
 <div class="header">
-  <div class="hbadge">✦ Моя реальність · 2025–2030 ✦</div>
+  <div class="hbadge">✦ Моя реальність · 2025 – 2030 ✦</div>
   <h1 class="htitle">Карта <span>Бажань</span></h1>
   <p class="hsub">Все що я візуалізую — вже стає моїм</p>
-  <div class="hdivider"></div>
+  <div class="hdiv"></div>
 </div>
 
-<!-- ═══ BOARD ═══ -->
+<!-- ══════════ BOARD ══════════ -->
 <div id="board-wrap">
+<svg id="rope-svg" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6b4f0e"/>
+      <stop offset="30%"  stop-color="#c9a84c"/>
+      <stop offset="65%"  stop-color="#8B6914"/>
+      <stop offset="100%" stop-color="#f0d080"/>
+    </linearGradient>
+  </defs>
+  <g id="ropes"></g>
+  <g id="knots"></g>
+</svg>
 
-  <!-- ROPE SVG OVERLAY -->
-  <svg id="rope-svg" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="ropeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8B6914"/>
-        <stop offset="30%" stop-color="#c9a84c"/>
-        <stop offset="60%" stop-color="#8B6914"/>
-        <stop offset="100%" stop-color="#c9a84c"/>
-      </linearGradient>
-      <filter id="ropeShadow">
-        <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(0,0,0,.5)"/>
-      </filter>
-    </defs>
-    <!-- Rope paths drawn by JS -->
-    <g id="ropes"></g>
-    <g id="knots"></g>
-  </svg>
+<div class="grid" id="grid">
 
-  <div class="grid" id="grid">
+<!-- ════════════════════════════════
+     SECTION 1 · ГРОШІ · ДІМ · АВТО
+════════════════════════════════ -->
+<div class="sec-label" style="opacity:0;transition:opacity .8s .1s" data-sec>💰 &nbsp; Гроші · Дім · Авто &nbsp; 💰</div>
 
-    <!-- ═ CARD 1: FAMILY ═ -->
-    <div class="card c1" id="c1">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1511895426328-dc8714191011?w=800&q=80" alt="family" loading="lazy"/>
-      <div class="badge">Сім'я 💛</div>
-      <div class="ov">
-        <span class="tag">✦ Найголовніше</span>
-        <p class="qt">«Сім'я — це там, де тебе завжди чекають і завжди люблять.»</p>
-        <p class="au">— Кузьма Скрябін</p>
-      </div>
+<!-- 1 MONEY -->
+<div class="card r1c1" id="s1c1" style="transition-delay:.05s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=82" alt="money gold"/>
+  <div class="badge">Гроші 💰</div>
+  <div class="ov">
+    <span class="tag">✦ Фінансова свобода</span>
+    <p class="qt">«Мільйон — це не ціль. Це лише початок великого шляху.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- 2 DREAM HOUSE -->
+<div class="card r1c2" id="s1c2" style="transition-delay:.10s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=82" alt="luxury house"/>
+  <div class="badge">Будинок 🏰</div>
+  <div class="ov">
+    <span class="tag">✦ Мій палац</span>
+    <p class="qt">«Будинок — це не мури. Це відчуття, що ти прийшов додому.»</p>
+    <p class="au">— Ліна Костенко</p>
+  </div>
+</div>
+
+<!-- 3 DREAM CAR -->
+<div class="card r1c3" id="s1c3" style="transition-delay:.15s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=82" alt="luxury sports car"/>
+  <div class="badge">Авто 🚗</div>
+  <div class="ov">
+    <span class="tag">✦ Мрія на дорозі</span>
+    <p class="qt">«Той хто їде впевнено — той і приїздить першим.»</p>
+    <p class="au">— Кузьма Скрябін</p>
+  </div>
+</div>
+
+<!-- QUOTE CARD: inline -->
+<div class="qcard r2c1" id="s2c1" style="background:linear-gradient(135deg,#100c02,#1e1706);border:1px solid rgba(201,168,76,.2);transition-delay:.18s">
+  <div class="pin"></div>
+  <div class="big-q">"</div>
+  <p class="qtext">«Не чекай ідеального моменту — візьми момент і зроби його ідеальним.»</p>
+  <div class="qauthor">— Кузьма Скрябін</div>
+</div>
+
+<!-- INVESTMENT CHART -->
+<div class="card r2c2" id="s2c2" style="transition-delay:.22s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=750&q=82" alt="stock market investments"/>
+  <div class="badge">Інвестиції 📈</div>
+  <div class="ov">
+    <span class="tag">✦ Пасивний дохід</span>
+    <p class="qt">«Гроші повинні працювати поки ти спиш.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- MASTERCHEF -->
+<div class="card r2c3" id="s2c3" style="transition-delay:.26s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=82" alt="fine dining masterchef"/>
+  <div class="badge">MasterChef 👨‍🍳</div>
+  <div class="ov">
+    <span class="tag">✦ Зірковий шеф</span>
+    <p class="qt">«Геніальна страва — це коли серце вкладається разом зі спеціями.»</p>
+    <p class="au">— Євген Клопотенко</p>
+  </div>
+</div>
+
+<!-- SUCCESS CHAMPAGNE -->
+<div class="card r2c4" id="s2c4" style="transition-delay:.30s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=700&q=82" alt="champagne luxury success"/>
+  <div class="badge">Успіх ✨</div>
+  <div class="ov">
+    <span class="tag">✦ Успішний успіх</span>
+    <p class="qt">«Святкуй кожну перемогу — навіть маленьку.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 2 · СІМ'Я
+════════════════════════════════ -->
+<div class="sec-label" style="opacity:0;transition:opacity .8s .3s" data-sec>💛 &nbsp; Сім'я · Любов · Дім &nbsp; 💛</div>
+
+<!-- FAMILY 1 – parents with kids outdoor -->
+<div class="card r3c1" id="s3c1" style="transition-delay:.32s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1511895426328-dc8714191011?w=900&q=82" alt="happy family outdoors"/>
+  <div class="badge">Сім'я 💛</div>
+  <div class="ov">
+    <span class="tag">✦ Найголовніше</span>
+    <p class="qt">«Сім'я — це де тебе завжди чекають і завжди люблять, незалежно від усього.»</p>
+    <p class="au">— Кузьма Скрябін</p>
+  </div>
+</div>
+
+<!-- FAMILY 2 – couple sunset -->
+<div class="card r3c2" id="s3c2" style="transition-delay:.36s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=750&q=82" alt="couple love sunset"/>
+  <div class="badge">Кохання ❤️</div>
+  <div class="ov">
+    <span class="tag">✦ Ти та я</span>
+    <p class="qt">«Найкраща пригода в житті — це любити і бути коханим.»</p>
+    <p class="au">— Ліна Костенко</p>
+  </div>
+</div>
+
+<!-- FAMILY 3 – kids playing laughing -->
+<div class="card r3c3" id="s3c3" style="transition-delay:.40s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=800&q=82" alt="happy children laughing"/>
+  <div class="badge">Діти 👶</div>
+  <div class="ov">
+    <span class="tag">✦ Радість дітей</span>
+    <p class="qt">«Дитячий сміх — це найкраща музика у всесвіті.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- QUOTE 2 -->
+<div class="qcard r4c1" id="s4c1" style="background:linear-gradient(135deg,#050a18,#0c1528);border:1px solid rgba(100,149,237,.2);transition-delay:.42s">
+  <div class="pin"></div>
+  <div class="big-q" style="color:rgba(100,149,237,.18)">"</div>
+  <p class="qtext">«Хто не мріє про велике — ніколи не досягне навіть малого. Мрій без меж.»</p>
+  <div class="qauthor">— МС Петя</div>
+</div>
+
+<!-- FAMILY HOME / COZY DINNER -->
+<div class="card r4c2" id="s4c2" style="transition-delay:.46s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=850&q=82" alt="cozy family home dinner"/>
+  <div class="badge">Затишок 🏡</div>
+  <div class="ov">
+    <span class="tag">✦ Сімейний вечір</span>
+    <p class="qt">«Найкращий ресторан — це домашній стіл із тими, кого любиш.»</p>
+    <p class="au">— Кузьма Скрябін</p>
+  </div>
+</div>
+
+<!-- COUPLE TRAVEL / ADVENTURE -->
+<div class="card r4c3" id="s4c3" style="transition-delay:.50s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1520209759809-a9bcb6cb3241?w=750&q=82" alt="couple travel adventure mountains"/>
+  <div class="badge">Подорожі ✈️</div>
+  <div class="ov">
+    <span class="tag">✦ Разом у світ</span>
+    <p class="qt">«Кращі спогади — ті, що пережиті разом із коханими.»</p>
+    <p class="au">— Ліна Костенко</p>
+  </div>
+</div>
+
+<!-- FAMILY NATURE WIDE -->
+<div class="card r4c4" id="s4c4" style="transition-delay:.54s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1588392382834-a891154bca4d?w=700&q=82" alt="family nature walk"/>
+  <div class="badge">Природа 🌿</div>
+  <div class="ov">
+    <span class="tag">✦ Вихідні разом</span>
+    <p class="qt">«Природа лікує душу, сім'я — серце.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 3 · СПОРТ · ХАРЧУВАННЯ
+════════════════════════════════ -->
+<div class="sec-label" style="opacity:0;transition:opacity .8s .5s" data-sec>💪 &nbsp; Спорт · Здоров'я · Харчування &nbsp; 🥗</div>
+
+<!-- WORKOUT GYM -->
+<div class="card r5c1" id="s5c1" style="transition-delay:.55s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=850&q=82" alt="gym workout fitness"/>
+  <div class="badge">Спорт 💪</div>
+  <div class="ov">
+    <span class="tag">✦ Тіло — храм</span>
+    <p class="qt">«Твоє тіло може все. Переконай у цьому свій розум.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- RUNNING / MARATHON -->
+<div class="card r5c2" id="s5c2" style="transition-delay:.59s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=850&q=82" alt="marathon running athlete"/>
+  <div class="badge">Марафон 🏃</div>
+  <div class="ov">
+    <span class="tag">✦ Я бігу і перемагаю</span>
+    <p class="qt">«Фініш є лише там, де ти вирішив зупинитись. Не зупиняйся.»</p>
+    <p class="au">— Кузьма Скрябін</p>
+  </div>
+</div>
+
+<!-- HEALTHY FOOD -->
+<div class="card r5c3" id="s5c3" style="transition-delay:.63s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=850&q=82" alt="healthy food nutrition vegetables"/>
+  <div class="badge">Харчування 🥗</div>
+  <div class="ov">
+    <span class="tag">✦ Їж правильно</span>
+    <p class="qt">«Ти є те, що ти їси. Їж так, ніби поважаєш себе.»</p>
+    <p class="au">— Євген Клопотенко</p>
+  </div>
+</div>
+
+<!-- YOGA / MEDITATION -->
+<div class="card r1c1" id="s6c1" style="grid-column:1/4;min-height:290px;transition-delay:.66s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=700&q=82" alt="yoga meditation mindfulness"/>
+  <div class="badge">Медитація 🧘</div>
+  <div class="ov">
+    <span class="tag">✦ Спокій і сила</span>
+    <p class="qt">«Сильний той, хто може зупинитись і подихати.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- SMOOTHIE / NUTRITION CLOSE UP -->
+<div class="card" id="s6c2" style="grid-column:4/7;min-height:290px;transition-delay:.70s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=750&q=82" alt="healthy smoothie breakfast nutrition"/>
+  <div class="badge">Енергія ⚡</div>
+  <div class="ov">
+    <span class="tag">✦ Паливо для перемог</span>
+    <p class="qt">«Великий день починається з правильного сніданку.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- SWIMMING / SPORT WATER -->
+<div class="card" id="s6c3" style="grid-column:7/10;min-height:290px;transition-delay:.74s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=750&q=82" alt="swimming athlete sport"/>
+  <div class="badge">Плавання 🏊</div>
+  <div class="ov">
+    <span class="tag">✦ Кожен день — тренування</span>
+    <p class="qt">«Дисципліна — це міст між мрією та досягненням.»</p>
+    <p class="au">— Кузьма Скрябін</p>
+  </div>
+</div>
+
+<!-- QUOTE 3 SPORT -->
+<div class="qcard" id="s6c4" style="grid-column:10/13;min-height:290px;background:linear-gradient(135deg,#080c04,#141e08);border:1px solid rgba(46,139,87,.25);transition-delay:.78s">
+  <div class="pin"></div>
+  <div class="big-q" style="color:rgba(46,139,87,.15)">"</div>
+  <p class="qtext">«Немає поганих тренувань. Є лише те, що ти пропустив.»</p>
+  <div class="qauthor">— МС Петя</div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 4 · АНГЛІЙСЬКА · РОЗВИТОК
+════════════════════════════════ -->
+<div class="sec-label" style="opacity:0;transition:opacity .8s .7s" data-sec>📚 &nbsp; Англійська · Саморозвиток &nbsp; 🌍</div>
+
+<!-- ENGLISH BOOKS -->
+<div class="card" id="s7c1" style="grid-column:1/4;min-height:320px;transition-delay:.80s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=750&q=82" alt="books english learning library"/>
+  <div class="badge">Англійська 📚</div>
+  <div class="ov">
+    <span class="tag">✦ Нова мова</span>
+    <p class="qt">«Кожна нова мова — це нове вікно у світ.»</p>
+    <p class="au">— Ліна Костенко</p>
+  </div>
+</div>
+
+<!-- LAPTOP STUDY ONLINE -->
+<div class="card" id="s7c2" style="grid-column:4/7;min-height:320px;transition-delay:.84s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=82" alt="laptop online learning study"/>
+  <div class="badge">Онлайн 💻</div>
+  <div class="ov">
+    <span class="tag">✦ Вчуся кожен день</span>
+    <p class="qt">«Інвестиція в знання — найприбутковіша з усіх.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- TRAVEL WORLD MAP – result of English -->
+<div class="card" id="s7c3" style="grid-column:7/10;min-height:320px;transition-delay:.88s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=82" alt="world travel map adventure"/>
+  <div class="badge">Світ 🌍</div>
+  <div class="ov">
+    <span class="tag">✦ Весь світ відкритий</span>
+    <p class="qt">«English opens every door in the world — відкрий і ти.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- CONFERENCE SPEAKER / SUCCESS BUSINESS -->
+<div class="card" id="s7c4" style="grid-column:10/13;min-height:320px;transition-delay:.92s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=750&q=82" alt="conference speaker business success"/>
+  <div class="badge">Виступ 🎤</div>
+  <div class="ov">
+    <span class="tag">✦ Я говорю англійською</span>
+    <p class="qt">«Той хто вміє говорити — той керує своєю долею.»</p>
+    <p class="au">— Кузьма Скрябін</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     SECTION 5 · ПЕРЕМОГА УКРАЇНИ
+════════════════════════════════ -->
+<div class="sec-label" style="opacity:0;transition:opacity .8s .9s" data-sec>🇺🇦 &nbsp; Перемога · Мир · Україна &nbsp; 🕊️</div>
+
+<!-- UKRAINE PEACE SUNRISE -->
+<div class="card" id="s8c1" style="grid-column:1/5;min-height:340px;transition-delay:.95s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=82" alt="ukraine mountains sunrise victory"/>
+  <div class="badge" style="background:#005bbb;color:#ffd500">Мир 🕊️</div>
+  <div class="ov">
+    <span class="tag">✦ Війна скінчилась</span>
+    <p class="qt">«Україна буде вільною — це вирок, а не бажання.»</p>
+    <p class="au">— Сергій Жадан</p>
+  </div>
+</div>
+
+<!-- STADIUM / FOOTBALL UKRAINE -->
+<div class="card" id="s8c2" style="grid-column:5/9;min-height:340px;transition-delay:1.0s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=900&q=82" alt="football stadium victory championship"/>
+  <div class="badge">Збірна 🏆</div>
+  <div class="ov">
+    <span class="tag">✦ Чемпіони Світу</span>
+    <p class="qt">«Збірна України підніметься на вершину. Це лише питання часу.»</p>
+    <p class="au">— Андрій Шевченко</p>
+  </div>
+</div>
+
+<!-- DOVE / PEACE NATURE -->
+<div class="card" id="s8c3" style="grid-column:9/13;min-height:340px;transition-delay:1.05s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?w=850&q=82" alt="white dove peace freedom nature"/>
+  <div class="badge" style="background:#ffd500;color:#005bbb">Свобода 🕊️</div>
+  <div class="ov">
+    <span class="tag">✦ Вільна Україна</span>
+    <p class="qt">«Коли замовкнуть гармати — зацвіте все, що чекало.»</p>
+    <p class="au">— Сергій Жадан</p>
+  </div>
+</div>
+
+<!-- UKRAINIAN FLAG WAVING -->
+<div class="card" id="s8c4" style="grid-column:1/4;min-height:280px;transition-delay:1.08s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1584646098378-0f39a4ea5f3f?w=800&q=82" alt="ukraine flag waving blue yellow"/>
+  <div class="badge" style="background:#005bbb;color:#ffd500">Прапор 🇺🇦</div>
+  <div class="ov">
+    <span class="tag">✦ Слава Україні</span>
+    <p class="qt">«Ми з країни, де навіть ніч сяє синьо-жовтим.»</p>
+    <p class="au">— МС Петя</p>
+  </div>
+</div>
+
+<!-- WHEAT FIELD UKRAINE -->
+<div class="card" id="s8c5" style="grid-column:4/7;min-height:280px;transition-delay:1.12s">
+  <div class="pin"></div>
+  <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=82" alt="wheat field sunset ukraine"/>
+  <div class="badge" style="background:#c8a020;color:#fff">Земля 🌾</div>
+  <div class="ov">
+    <span class="tag">✦ Рідна земля</span>
+    <p class="qt">«Земля, де ти народився — це твоя вічна сила.»</p>
+    <p class="au">— Ліна Костенко</p>
+  </div>
+</div>
+
+<!-- QUOTE UKRAINE FINAL -->
+<div class="qcard" id="s8c6" style="grid-column:7/13;min-height:280px;background:linear-gradient(135deg,#000a1e,#001535);border:1px solid rgba(0,91,187,.3);transition-delay:1.16s">
+  <div class="pin"></div>
+  <div class="big-q" style="color:rgba(255,213,0,.12)">"</div>
+  <p class="qtext" style="font-size:clamp(16px,1.8vw,22px)">«Ми не зламаємось ніколи, бо ми — українці. І цього достатньо.»</p>
+  <div class="qauthor" style="margin-top:12px">— Сергій Жадан</div>
+  <div style="margin-top:20px;font-family:'Unbounded',sans-serif;font-size:24px;letter-spacing:4px">
+    🇺🇦
+  </div>
+</div>
+
+<!-- ════ MC PETYA HERO ════ -->
+<div class="sec-label" style="opacity:0;transition:opacity .8s 1.1s" data-sec>🎤 &nbsp; МС Петя · Головний Мотиватор &nbsp; 🎤</div>
+
+<div class="petya-wrap" id="petya">
+  <div class="petya-bg">
+    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1600&q=80" alt="concert stage ukraine"/>
+  </div>
+  <div class="petya-grad"></div>
+  <div class="petya-inner">
+
+    <!-- photo -->
+    <div class="photo-frame">
+      <div class="photo-glow"></div>
+      <img
+        src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80"
+        alt="МС Петя мотиватор"
+        style="width:255px;height:315px;object-fit:cover;object-position:top center;
+          border-radius:20px;border:3px solid #c9a84c;
+          box-shadow:0 0 70px rgba(201,168,76,.45),0 25px 50px rgba(0,0,0,.6);"
+      />
+      <div class="nameplate">🎤 МС ПЕТЯ</div>
     </div>
 
-    <!-- ═ CARD 2: MONEY ═ -->
-    <div class="card c2" id="c2">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=700&q=80" alt="money" loading="lazy"/>
-      <div class="badge">Гроші 💰</div>
-      <div class="ov">
-        <span class="tag">✦ Фінансова свобода</span>
-        <p class="qt">«Мільйон — це не ціль. Це початок.»</p>
-        <p class="au">— МС Петя</p>
-      </div>
-    </div>
+    <!-- text -->
+    <div style="flex:1">
+      <div class="hero-label">🇺🇦 ГОЛОВНИЙ МОТИВАТОР УКРАЇНИ</div>
 
-    <!-- ═ CARD 3: DREAM CAR ═ -->
-    <div class="card c3" id="c3">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=900&q=80" alt="luxury car" loading="lazy"/>
-      <div class="badge">Авто 🚗</div>
-      <div class="ov">
-        <span class="tag">✦ Мрія на колесах</span>
-        <p class="qt">«Дорога відкривається тому, хто впевнено натискає на газ.»</p>
-        <p class="au">— Кузьма Скрябін</p>
-      </div>
-    </div>
-
-    <!-- ═ CARD 4: INVESTMENT ═ -->
-    <div class="card c4" id="c4">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=700&q=80" alt="investments" loading="lazy"/>
-      <div class="badge">Інвестиції 📈</div>
-      <div class="ov">
-        <span class="tag">✦ Гроші працюють</span>
-        <p class="qt">«Інвестуй сьогодні — живи завтра.»</p>
-        <p class="au">— МС Петя</p>
-      </div>
-    </div>
-
-    <!-- ═ CARD 5: MASTERCHEF ═ -->
-    <div class="card c5" id="c5">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="masterchef fine dining" loading="lazy"/>
-      <div class="badge">MasterChef 👨‍🍳</div>
-      <div class="ov">
-        <span class="tag">✦ Зірковий шеф</span>
-        <p class="qt">«Геніальна страва — це коли серце вкладається разом із сіллю.»</p>
-        <p class="au">— Євген Клопотенко</p>
-      </div>
-    </div>
-
-    <!-- ═ CARD 6: DREAM HOUSE ═ -->
-    <div class="card c6" id="c6">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80" alt="dream house" loading="lazy"/>
-      <div class="badge">Будинок 🏰</div>
-      <div class="ov">
-        <span class="tag">✦ Мій палац</span>
-        <p class="qt">«Будинок там, де серце знаходить свій спокій.»</p>
-        <p class="au">— Ліна Костенко</p>
-      </div>
-    </div>
-
-    <!-- ═ CARD 7: UKRAINE CHAMPIONSHIP ═ -->
-    <div class="card c7" id="c7">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80" alt="football stadium" loading="lazy"/>
-      <div class="badge">Збірна 🏆</div>
-      <div class="ov">
-        <span class="tag">✦ Чемпіони світу</span>
-        <p class="qt">«Ми виграємо, бо інакше просто не може бути.»</p>
-        <p class="au">— Андрій Шевченко</p>
-      </div>
-    </div>
-
-    <!-- ═ CARD 8: SUCCESS ═ -->
-    <div class="card c8" id="c8">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=800&q=80" alt="champagne success" loading="lazy"/>
-      <div class="badge">Успіх ✨</div>
-      <div class="ov">
-        <span class="tag">✦ Успішний успіх</span>
-        <p class="qt">«Той, хто святкує перемогу — той її і отримує.»</p>
-        <p class="au">— МС Петя</p>
-      </div>
-    </div>
-
-    <!-- ═ CARD 9: UKRAINE PEACE ═ -->
-    <div class="card c9" id="c9">
-      <div class="pin"></div>
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="ukraine mountains sunrise" loading="lazy"/>
-      <div class="badge" style="background:#005bbb;color:#ffd500">Мир 🕊️</div>
-      <div class="ov">
-        <span class="tag">✦ Війна скінчилась</span>
-        <p class="qt">«Україна буде вільною — це вирок, а не мрія.»</p>
-        <p class="au">— Сергій Жадан</p>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════ -->
-    <!-- ═ HERO MC PETYA SECTION ═ -->
-    <!-- ═══════════════════════════════════════ -->
-    <div class="petya-section" id="petya">
-      <div class="petya-bg">
-        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1400&q=80" alt="stage concert ukraine"/>
-      </div>
-      <div class="petya-gradient"></div>
-
-      <div class="petya-content">
-        <!-- photo placeholder with gold frame -->
-        <div class="petya-photo-wrap">
-          <div class="petya-glow"></div>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Trident_Ukrainian.svg/400px-Trident_Ukrainian.svg.png"
-            alt="МС Петя"
-            style="width:260px;height:320px;object-fit:contain;object-position:center;
-              border-radius:20px;border:3px solid #c9a84c;background:#0a0a20;padding:40px;
-              box-shadow:0 0 60px rgba(201,168,76,.4),0 20px 40px rgba(0,0,0,.5);"
-          />
-          <!-- PETYA name plate -->
-          <div style="position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
-            background:var(--gold);color:#1a0800;font-family:'Unbounded',sans-serif;
-            font-size:11px;font-weight:700;padding:6px 20px;border-radius:100px;
-            white-space:nowrap;letter-spacing:2px;box-shadow:0 4px 20px rgba(201,168,76,.5);">
-            🎤 МС ПЕТЯ
-          </div>
-        </div>
-
-        <div class="petya-text">
-          <div class="petya-name">🇺🇦 ГОЛОВНИЙ МОТИВАТОР УКРАЇНИ</div>
-
-          <div class="petya-title">
-            <span class="glow-text">Я ЖИВИЙ.</span><br>
-            <span class="gold">Я СИЛЬНИЙ.</span><br>
-            Я МОТИВАТОР.
-          </div>
-
-          <div class="petya-subtitle">НЕХАЙ СВІТ ПОЧУЄ ВСІ МОЇ ТЕКСТИ</div>
-
-          <p class="petya-quote">
-            «Я не зупиняюсь. Я не здаюсь. Я — це доказ того,
-            що звичайна людина може змінити світ своїми словами.»
-          </p>
-
-          <div class="ukraine-badge">
-            🇺🇦 &nbsp; СЛАВА УКРАЇНІ &nbsp; 🇺🇦
-          </div>
-
-          <!-- BIG MOTIVATIONAL TEXT -->
-          <div style="margin-top:30px;display:flex;flex-wrap:wrap;gap:10px;">
-            <span style="font-family:'Unbounded',sans-serif;font-size:clamp(10px,1.5vw,14px);
-              font-weight:700;color:var(--gold);letter-spacing:3px;
-              text-transform:uppercase;animation:textShimmer 2.5s ease-in-out infinite;">
-              ✦ МРІЙ ВЕЛИКИМИ МРІЯМИ ✦
-            </span>
-            <span style="font-family:'Unbounded',sans-serif;font-size:clamp(10px,1.5vw,14px);
-              font-weight:700;color:rgba(245,239,224,.7);letter-spacing:2px;text-transform:uppercase;">
-              ✦ ДІЙ РІШУЧЕ ✦
-            </span>
-            <span style="font-family:'Unbounded',sans-serif;font-size:clamp(10px,1.5vw,14px);
-              font-weight:700;color:var(--gold);letter-spacing:3px;text-transform:uppercase;
-              animation:textShimmer 3s ease-in-out infinite .5s;">
-              ✦ ДОСЯГАЙ МАКСИМУМУ ✦
-            </span>
-          </div>
-        </div>
+      <div class="hero-main">
+        <div class="glowline">Я ЖИВИЙ.</div>
+        <div class="goldline">Я СИЛЬНИЙ.</div>
+        <div class="whiteline">Я МОТИВАТОР.</div>
       </div>
 
-      <!-- BIG BACKGROUND TEXT -->
-      <div style="position:absolute;bottom:20px;left:0;right:0;text-align:center;z-index:2;
-        font-family:'Unbounded',sans-serif;font-size:clamp(28px,5vw,72px);font-weight:900;
-        color:rgba(201,168,76,.07);letter-spacing:8px;text-transform:uppercase;
-        pointer-events:none;line-height:1;">
-        Я ЖИВИЙ Я СИЛЬНИЙ Я МОТИВАТОР
-      </div>
-    </div>
+      <div class="hero-sub">НЕХАЙ СВІТ ПОЧУЄ ВСІ МОЇ ТЕКСТИ</div>
 
-    <!-- ═ MANIFESTO ═ -->
-    <div class="manifesto" id="manifesto">
-      <div class="man-title">✦ Моя Реальність ✦</div>
-      <p class="man-text">
-        «Живи так, ніби все можливо — бо так воно і є.
-        Кохай так, ніби час безкінечний.
-        Мрій так, ніби мрії вже збулися прямо зараз.»
+      <p class="hero-quote">
+        «Я не зупиняюсь і не здаюсь — я доказ того,
+        що звичайна людина може змінити світ своїми словами.
+        Україна почує. Світ почує.»
       </p>
-      <div style="margin-top:16px;color:rgba(201,168,76,.55);font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:4px;">
-        — Кузьма Скрябін —
+
+      <div class="ua-chip" style="margin-top:18px">
+        🇺🇦 &nbsp; СЛАВА УКРАЇНІ — ГЕРОЯМ СЛАВА &nbsp; 🇺🇦
       </div>
-      <div class="tags-row">
-        <span class="tag-pill">🏠 МІЙ БУДИНОК</span>
-        <span class="tag-pill">🚗 МОЄ АВТО</span>
-        <span class="tag-pill">💛 МОЯ СІМ'Я</span>
-        <span class="tag-pill">💰 МОЇ ГРОШІ</span>
-        <span class="tag-pill">📈 ІНВЕСТИЦІЇ</span>
-        <span class="tag-pill">👨‍🍳 MASTERCHEF</span>
-        <span class="tag-pill">🏆 ЗБІРНА ПЕРЕМАГАЄ</span>
-        <span class="tag-pill">🕊️ МИР В УКРАЇНІ</span>
-        <span class="tag-pill">🎤 МС ПЕТЯ</span>
+
+      <div class="chips-row">
+        <span class="chip">✦ МРІЙ ВЕЛИКИМИ МРІЯМИ</span>
+        <span class="chip" style="animation-delay:.5s">✦ ДІЙ РІШУЧЕ</span>
+        <span class="chip" style="animation-delay:1s">✦ ДОСЯГАЙ МАКСИМУМУ</span>
+        <span class="chip" style="animation-delay:1.5s">✦ НІКОЛИ НЕ ЗДАВАЙСЯ</span>
       </div>
     </div>
+  </div>
+  <div class="petya-watermark">Я ЖИВИЙ Я СИЛЬНИЙ Я МОТИВАТОР</div>
+</div>
 
-  </div><!-- /grid -->
+<!-- ════ MANIFESTO ════ -->
+<div class="manifesto" id="manifesto">
+  <div class="man-title">✦ Моя Реальність 2025–2030 ✦</div>
+  <p class="man-text">
+    «Живи так, ніби все можливо — бо так воно і є.
+    Кохай без меж. Мрій без страху. Дій без зволікань.
+    Все це вже твоє — просто протягни руку.»
+  </p>
+  <div style="margin-top:14px;color:rgba(201,168,76,.5);font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:4px">— Кузьма Скрябін —</div>
+  <div class="pills">
+    <span class="pill">🏠 Будинок</span>
+    <span class="pill">🚗 Авто</span>
+    <span class="pill">💛 Сім'я</span>
+    <span class="pill">💰 Гроші</span>
+    <span class="pill">📈 Інвестиції</span>
+    <span class="pill">👨‍🍳 MasterChef</span>
+    <span class="pill">💪 Спорт</span>
+    <span class="pill">🥗 Харчування</span>
+    <span class="pill">📚 Англійська</span>
+    <span class="pill">🏆 Збірна перемагає</span>
+    <span class="pill">🕊️ Мир в Україні</span>
+    <span class="pill">🎤 МС Петя</span>
+  </div>
+</div>
+
+</div><!-- /grid -->
 </div><!-- /board-wrap -->
 
 <div class="footer">
-  <span style="color:var(--gold)">✦</span> &nbsp; Карта Бажань · 2025–2030 · Все це вже моя реальність &nbsp; <span style="color:var(--gold)">✦</span>
+  <span style="color:var(--gold)">✦</span> &nbsp;
+  Карта Бажань · 2025–2030 · Все це вже моя реальність
+  &nbsp; <span style="color:var(--gold)">✦</span>
+</div>
+
+<!-- TICKER -->
+<div id="ticker">
+  <span id="ticker-t"></span>
 </div>
 
 <script>
-// ─── PARTICLES ───────────────────────────────────────────
-const pc = document.getElementById('particles');
-for(let i=0;i<40;i++){
-  const p = document.createElement('div');
-  p.className = 'pt';
-  const s = Math.random()*5+1;
+/* ─── PARTICLES ─────────────────────── */
+const pc=document.getElementById('particles');
+const colors=['#c9a84c','rgba(255,255,255,.7)','#f0d080','rgba(0,91,187,.6)','rgba(255,213,0,.5)'];
+for(let i=0;i<50;i++){
+  const p=document.createElement('div');p.className='pt';
+  const s=Math.random()*5+1;
   Object.assign(p.style,{
-    width:s+'px',height:s+'px',
-    left:Math.random()*100+'%',
-    animationDuration:(Math.random()*10+7)+'s',
-    animationDelay:Math.random()*10+'s',
-    opacity:'0',
-    background: Math.random()>.5 ? '#c9a84c' : 'rgba(255,255,255,0.6)'
+    width:s+'px',height:s+'px',left:Math.random()*100+'%',
+    background:colors[Math.floor(Math.random()*colors.length)],
+    animationDuration:(Math.random()*12+7)+'s',
+    animationDelay:Math.random()*12+'s',opacity:'0'
   });
   pc.appendChild(p);
 }
 
-// ─── INTERSECTION OBSERVER ────────────────────────────────
-const io = new IntersectionObserver(entries=>{
+/* ─── INTERSECTION OBSERVER ─────────── */
+const io=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
-      e.target.classList.add('visible');
+      e.target.classList.add('vis');
+      if(e.target.dataset.sec!==undefined) e.target.style.opacity='1';
       io.unobserve(e.target);
     }
   });
-},{threshold:.08});
-document.querySelectorAll('.card,.petya-section,.manifesto').forEach(el=>io.observe(el));
+},{threshold:.07});
 
-// ─── ROPE DRAWING ─────────────────────────────────────────
+document.querySelectorAll('.card,.qcard,.petya-wrap,.manifesto').forEach(el=>io.observe(el));
+document.querySelectorAll('[data-sec]').forEach(el=>io.observe(el));
+
+/* ─── ROPE ───────────────────────────── */
 function drawRopes(){
-  const wrap = document.getElementById('board-wrap');
-  const svg  = document.getElementById('rope-svg');
-  const rg   = document.getElementById('ropes');
-  const kg   = document.getElementById('knots');
-  rg.innerHTML=''; kg.innerHTML='';
+  const wrap=document.getElementById('board-wrap');
+  const rg=document.getElementById('ropes');
+  const kg=document.getElementById('knots');
+  const svg=document.getElementById('rope-svg');
+  if(!rg||!kg) return;
+  rg.innerHTML='';kg.innerHTML='';
 
-  const ids = ['c1','c2','c3','c4','c5','c6','c7','c8','c9'];
-  const wRect = wrap.getBoundingClientRect();
+  const cardIds=[
+    's1c1','s1c2','s1c3',
+    's2c1','s2c2','s2c3','s2c4',
+    's3c1','s3c2','s3c3',
+    's4c1','s4c2','s4c3','s4c4',
+    's5c1','s5c2','s5c3',
+    's6c1','s6c2','s6c3','s6c4',
+    's7c1','s7c2','s7c3','s7c4',
+    's8c1','s8c2','s8c3','s8c4','s8c5','s8c6'
+  ];
+  const wr=wrap.getBoundingClientRect();
 
-  const centers = ids.map(id=>{
-    const el = document.getElementById(id);
+  const pts=cardIds.map(id=>{
+    const el=document.getElementById(id);
     if(!el) return null;
-    const r = el.getBoundingClientRect();
-    return {
-      x: r.left - wRect.left + r.width/2,
-      y: r.top  - wRect.top  + 0        // top edge for pin
-    };
+    const r=el.getBoundingClientRect();
+    return{x:r.left-wr.left+r.width/2, y:r.top-wr.top+8};
   }).filter(Boolean);
 
-  // Draw wavy rope between consecutive cards
-  for(let i=0;i<centers.length-1;i++){
-    const a = centers[i], b = centers[i+1];
-    const mx = (a.x+b.x)/2;
-    const my = (a.y+b.y)/2 + 55 + Math.abs(b.x-a.x)*0.08; // sag
+  for(let i=0;i<pts.length-1;i++){
+    const a=pts[i],b=pts[i+1];
+    const dx=b.x-a.x, dy=b.y-a.y;
+    const sag=Math.sqrt(dx*dx+dy*dy)*0.22+30;
+    const mx=(a.x+b.x)/2, my=(a.y+b.y)/2+sag;
 
-    const path = document.createElementNS('http://www.w3.org/2000/svg','path');
-    const d = `M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`;
-    path.setAttribute('d',d);
-    path.setAttribute('class','rope-path');
-    // animate drawing
-    const len = 1000;
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = len;
-    path.style.transition = `stroke-dashoffset 1.5s ease ${i*0.2+0.5}s`;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M${a.x} ${a.y} Q${mx} ${my} ${b.x} ${b.y}`);
+    path.setAttribute('class','rp');
+    path.setAttribute('stroke-width', i%5===0 ? '3':'2.5');
+    const L=1200;
+    path.style.cssText=`stroke-dasharray:${L};stroke-dashoffset:${L};transition:stroke-dashoffset 1.8s ease ${i*0.1+0.4}s`;
     rg.appendChild(path);
-    setTimeout(()=>{ path.style.strokeDashoffset = 0; },100);
+    setTimeout(()=>{path.style.strokeDashoffset='0';},120);
 
-    // knot at midpoint
-    const knot = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    const kx = mx + (Math.random()-.5)*20;
-    const ky = my + (Math.random()-.5)*10;
-    knot.setAttribute('cx',kx); knot.setAttribute('cy',ky); knot.setAttribute('r','6');
-    knot.setAttribute('class','rope-knot');
-    knot.style.opacity='0';
-    knot.style.transition=`opacity .5s ease ${i*0.2+1.5}s`;
-    kg.appendChild(knot);
-    setTimeout(()=>{ knot.style.opacity='1'; },100);
+    // knot circle
+    const kn=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    kn.setAttribute('cx',mx+(Math.random()-.5)*16);
+    kn.setAttribute('cy',my+(Math.random()-.5)*10);
+    kn.setAttribute('r','5.5');
+    kn.setAttribute('fill','#8B6914');
+    kn.setAttribute('class','kn');
+    kn.style.cssText=`opacity:0;transition:opacity .4s ease ${i*0.1+1.8}s`;
+    kg.appendChild(kn);
+    setTimeout(()=>{kn.style.opacity='1';},120);
   }
-
-  // Set SVG height
-  const maxY = Math.max(...centers.map(c=>c.y)) + 200;
-  svg.style.height = wrap.scrollHeight + 'px';
+  svg.style.height=wrap.scrollHeight+'px';
 }
+window.addEventListener('load',()=>setTimeout(drawRopes,500));
+window.addEventListener('resize',()=>setTimeout(drawRopes,300));
 
-// Wait for layout, then draw
-window.addEventListener('load',()=>{ setTimeout(drawRopes,400); });
-window.addEventListener('resize',()=>{ setTimeout(drawRopes,200); });
-
-// ─── CARD CLICK SPARKS ────────────────────────────────────
-document.querySelectorAll('.card').forEach(card=>{
-  card.addEventListener('click',function(e){
-    for(let i=0;i<10;i++){
-      const sp = document.createElement('div');
-      Object.assign(sp.style,{
-        position:'fixed',left:e.clientX+'px',top:e.clientY+'px',
-        width:'8px',height:'8px',
-        background:i%2===0?'#c9a84c':'#f0d080',
-        borderRadius:'50%',pointerEvents:'none',zIndex:'9999',
-        transform:'translate(-50%,-50%)'
-      });
-      document.body.appendChild(sp);
-      const ang = (i/10)*Math.PI*2;
-      const dist = 50+Math.random()*50;
-      sp.animate([
-        {transform:'translate(-50%,-50%) scale(1)',opacity:1},
-        {transform:`translate(calc(-50% + ${Math.cos(ang)*dist}px),calc(-50% + ${Math.sin(ang)*dist}px)) scale(0)`,opacity:0}
-      ],{duration:700,easing:'ease-out'}).onfinish=()=>sp.remove();
-    }
-  });
+/* ─── CLICK SPARKS ───────────────────── */
+document.addEventListener('click',function(e){
+  const card=e.target.closest('.card,.qcard');
+  if(!card) return;
+  for(let i=0;i<12;i++){
+    const sp=document.createElement('div');
+    const col=i%3===0?'#c9a84c':i%3===1?'#f0d080':'#fff';
+    Object.assign(sp.style,{
+      position:'fixed',left:e.clientX+'px',top:e.clientY+'px',
+      width:'7px',height:'7px',background:col,
+      borderRadius:'50%',pointerEvents:'none',zIndex:'9999',
+      transform:'translate(-50%,-50%)'
+    });
+    document.body.appendChild(sp);
+    const a=(i/12)*Math.PI*2,d=55+Math.random()*55;
+    sp.animate([
+      {transform:'translate(-50%,-50%) scale(1)',opacity:1},
+      {transform:`translate(calc(-50% + ${Math.cos(a)*d}px),calc(-50% + ${Math.sin(a)*d}px)) scale(0)`,opacity:0}
+    ],{duration:750,easing:'cubic-bezier(.23,1,.32,1)'}).onfinish=()=>sp.remove();
+  }
 });
 
-// ─── PARALLAX CARDS ON MOUSE MOVE ─────────────────────────
+/* ─── PARALLAX ON MOUSE ──────────────── */
+let rafP=null;
 document.addEventListener('mousemove',e=>{
-  const cx = (e.clientX/window.innerWidth-.5)*2;
-  const cy = (e.clientY/window.innerHeight-.5)*2;
-  document.querySelectorAll('.card.visible').forEach((c,i)=>{
-    const d = (i%3-1)*4;
-    c.style.transform = `translateY(${-cy*d}px) translateX(${cx*d}px) scale(1)`;
+  cancelAnimationFrame(rafP);
+  rafP=requestAnimationFrame(()=>{
+    const cx=(e.clientX/window.innerWidth-.5)*2;
+    const cy=(e.clientY/window.innerHeight-.5)*2;
+    document.querySelectorAll('.card.vis,.qcard.vis').forEach((c,i)=>{
+      const d=(i%3-1)*3.5;
+      c.style.transform=`translateY(${-cy*d-10}px) translateX(${cx*d}px) scale(1.035)`;
+      // reset non-hovered
+      if(!c.matches(':hover')) c.style.transform='';
+    });
   });
 });
 
-// ─── ANIMATED TITLE LOOP ──────────────────────────────────
-const phrases = [
-  'Я ЖИВИЙ — Я СИЛЬНИЙ — Я МОТИВАТОР',
-  'НЕХАЙ СВІТ ПОЧУЄ МОЇ ТЕКСТИ',
-  'СЛАВА УКРАЇНІ — ГЕРОЯМ СЛАВА',
-  'МОЯ КАРТА БАЖАНЬ СТАЄ РЕАЛЬНІСТЮ'
+/* ─── TICKER ─────────────────────────── */
+const phrases=[
+  '🎤  Я ЖИВИЙ · Я СИЛЬНИЙ · Я МОТИВАТОР  🎤',
+  '🇺🇦  НЕХАЙ СВІТ ПОЧУЄ МОЇ ТЕКСТИ  🇺🇦',
+  '✦  СЛАВА УКРАЇНІ — ГЕРОЯМ СЛАВА  ✦',
+  '💰  МОЯ КАРТА БАЖАНЬ СТАЄ РЕАЛЬНІСТЮ  💰',
+  '💪  МРІЙ ВЕЛИКИМИ МРІЯМИ — ДІЙ РІШУЧЕ  💪',
+  '🕊️  УКРАЇНА БУДЕ ВІЛЬНОЮ  🕊️',
+  '📚  Я ВИВЧАЮ АНГЛІЙСЬКУ — Я ВІДКРИВАЮ СВІТ  📚',
+  '🏆  ЗБІРНА УКРАЇНИ — ЧЕМПІОНИ  🏆'
 ];
 let pi=0;
-const ticker = document.createElement('div');
-Object.assign(ticker.style,{
-  position:'fixed',bottom:'0',left:'0',right:'0',zIndex:'50',
-  background:'rgba(6,6,16,.95)',borderTop:'1px solid rgba(201,168,76,.2)',
-  padding:'10px 0',overflow:'hidden',textAlign:'center'
-});
-ticker.innerHTML = `<span id="ticker-text" style="
-  font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;
-  letter-spacing:6px;color:#c9a84c;text-transform:uppercase;
-  display:inline-block;"></span>`;
-document.body.appendChild(ticker);
-function cycleTicker(){
-  const el = document.getElementById('ticker-text');
+function tick(){
+  const el=document.getElementById('ticker-t');
   if(!el) return;
-  el.style.transition='opacity .5s';
   el.style.opacity='0';
-  setTimeout(()=>{
-    el.textContent = '✦  ' + phrases[pi%phrases.length] + '  ✦';
-    el.style.opacity='1';
-    pi++;
-  },500);
+  setTimeout(()=>{el.textContent=phrases[pi++%phrases.length];el.style.opacity='1';},450);
 }
-cycleTicker();
-setInterval(cycleTicker,3500);
+tick(); setInterval(tick,3800);
 </script>
 </body>
 </html>
